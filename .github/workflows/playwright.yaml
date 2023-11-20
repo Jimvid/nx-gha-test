@@ -1,12 +1,11 @@
 name: Tests
 
 on:
+  name: Playwright Tests
   push:
-    paths:
-      - 'frontend/**'
+    branches: [ main, master, develop]
   pull_request:
-    paths:
-      - 'frontend/**'
+    branches: [ main, master, develop]
 
 jobs:
   e2e-tests:
