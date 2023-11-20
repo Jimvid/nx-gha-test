@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export interface HomeProps {}
 
 const StyledHome = styled.div`
-  color: pink;
+  color: salmon;
 `;
 
 // add this to prompt for a refresh
