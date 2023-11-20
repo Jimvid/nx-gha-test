@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@delogue/admin": ["apps/react/modules/admin/src/index.ts"],
+      "@delogue/compliance": ["apps/react/modules/compliance/src/index.ts"],
+      "@delogue/items": ["apps/react/modules/items/src/index.ts"],
+      "@delogue/shared": ["apps/react/modules/shared/src/index.ts"],
+      "@delogue/styles": ["apps/react/modules/styles/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
