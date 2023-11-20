@@ -3,7 +3,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { VitePWA } from 'vite-plugin-pwa';
-import istanbul from 'vite-plugin-istanbul';
 
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/react',
