@@ -37,3 +37,11 @@ jobs:
 
       # Run linting and tests in parallel
       - run: npx nx affected -t lint,test --parallel=2
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: report
+          path: html/
+          retention-days: 30
