@@ -1,0 +1,40 @@
+name: Tests
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+  pull_request:
+    paths:
+      - 'frontend/**'
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      # Clone repository
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+      # Setup node
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'  
+
+      # Install dependencies
+    - name: Install Dependencies
+      run: npm install
+
+      # Run nx to check what code has changed
+    - name: Run Nx Affected E2E with Playwright
+      run: npx nx affected:e2e --base=main --head=HEAD --parallel --maxParallel=3
+
+      # Run the tests with playwright
+    - name: Run Playwright Tests through Nx
+      run: npx nx run react:test
