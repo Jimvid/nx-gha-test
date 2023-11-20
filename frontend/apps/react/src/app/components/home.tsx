@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export interface HomeProps {}
 
 const StyledHome = styled.div`
-  color: pink;
+  color: red;
 `;
 
 // add this to prompt for a refresh
@@ -17,7 +17,7 @@ const StyledHome = styled.div`
 //   },
 // });
 
-export function Home(props: HomeProps) {
+export function Home() {
   return (
     <StyledHome>
       <h1>Welcome to Home!</h1>
