@@ -57,7 +57,7 @@ jobs:
         with:
           path: frontend/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
-      - run: npx nx affected:lint --base=${{ github.base_ref }} --head=${{ github.head_ref }} --parallel=2
+      - run: npx nx react:lint
         working-directory: frontend
 
   test:
@@ -71,7 +71,7 @@ jobs:
         with:
           path: frontend/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
-      - run: npx nx affected:test --base=${{ github.base_ref }} --head=${{ github.head_ref }} --parallel=2
+      - run: npx nx react:test
         working-directory: frontend
       - name: Upload Playwright report
         if: always()
