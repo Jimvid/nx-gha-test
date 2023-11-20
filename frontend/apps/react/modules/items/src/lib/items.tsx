@@ -13,6 +13,8 @@ export function Items(props: ItemsProps) {
       <h1>Welcome to Items!</h1>
       <p>Hello there matey</p>
       <p>Hello there matey</p>
+      <p>Hello there matey</p>
+      <p>Hello there matey</p>
     </StyledItems>
   );
 }
