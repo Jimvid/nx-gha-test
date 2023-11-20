@@ -43,5 +43,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: report
-          path: apps/react/html/
+          path: frontend/apps/react/html/
           retention-days: 30
