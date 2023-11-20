@@ -11,6 +11,7 @@ export function Compliance(props: ComplianceProps) {
   return (
     <StyledCompliance>
       <h1>Welcome to Compliance!</h1>
+      <p>Here is a change</p>
     </StyledCompliance>
   );
 }
