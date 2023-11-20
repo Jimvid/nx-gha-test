@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export interface ItemsProps {}
 
 const StyledItems = styled.div`
-  color: pink;
+  color: yellow;
 `;
 
 export function Items(props: ItemsProps) {
