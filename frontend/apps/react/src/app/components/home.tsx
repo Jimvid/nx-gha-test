@@ -22,6 +22,7 @@ export function Home(props: HomeProps) {
     <StyledHome>
       <h1>Welcome to Home!</h1>
       <p>We have missed you</p>
+      <p>more than you know</p>
       {/* <button
         onClick={() => {
           updateSW();
