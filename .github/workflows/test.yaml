@@ -1,4 +1,4 @@
-name: CI2
+name: CI
 on:
   push:
     branches:
@@ -37,32 +37,29 @@ jobs:
   format:
     needs: setup
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
+      - uses: actions/checkout@v4
       - name: Check formatting with Prettier
         run: npx nx format:check
+        working-directory: frontend
 
   lint:
     needs: setup
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
+      - uses: actions/checkout@v4
       - name: Run linting
         run: npx nx affected:lint --parallel=2
+        working-directory: frontend
 
   test:
     needs: setup
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
+      - uses: actions/checkout@v4
       - name: Run tests
         run: npx nx affected:test --parallel=2
+        working-directory: frontend
 
       - name: Upload Playwright report
         if: always()
