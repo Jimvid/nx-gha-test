@@ -12,6 +12,7 @@ export function Items(props: ItemsProps) {
     <StyledItems>
       <h1>Welcome to Items!</h1>
       <p>Hello</p>
+      <p>Hello</p>
     </StyledItems>
   );
 }
