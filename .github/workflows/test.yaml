@@ -9,58 +9,66 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      cache-key: ${{ steps.cache-keys.outputs.key }}
+      cache-hit: ${{ steps.cache-node-modules.outputs.cache-hit }}
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Cache Node.js modules
+        id: cache-node-modules
+        uses: actions/cache@v3
         with:
-          fetch-depth: 0
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Cache node modules
-        id: cache-keys
-        run: echo "::set-output name=key::$(echo ${{ hashFiles('frontend/package-lock.json') }})"
-
-      - name: Install dependencies
+      - name: Install dependencies if cache missed
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
         working-directory: frontend
 
-      - name: Setup Nx SHA
-        uses: nrwl/nx-set-shas@v3
-
   format:
+    name: Check Code Formatting
     needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check formatting with Prettier
-        run: npx nx format:check
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+      - run: npx nx format:check
         working-directory: frontend
 
   lint:
+    name: Lint Code
     needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run linting
-        run: npx nx affected:lint --parallel=2
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+      - run: npx nx affected:lint --parallel=2
         working-directory: frontend
 
   test:
+    name: Run Tests and Upload Report
     needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run tests
-        run: npx nx affected:test --parallel=2
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+      - run: npx nx affected:test --parallel=2
         working-directory: frontend
-
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v3
