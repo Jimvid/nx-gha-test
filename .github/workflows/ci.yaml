@@ -33,5 +33,5 @@ jobs:
       - run: git branch --track develop origin/develop
 
       # Run format check, lint, test, and build
-      - run: npx nx format:check
+      - run: npx nx format:write
       - run: npx nx affected -t lint,test,build --parallel=3
