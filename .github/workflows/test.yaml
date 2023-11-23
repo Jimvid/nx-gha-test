@@ -47,11 +47,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: frontend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('frontend/yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
       - run: npx nx format:check --all
         working-directory: frontend
 
@@ -65,7 +66,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: frontend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('frontend/yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
       - run: npx nx run react:lint
         working-directory: frontend
   test:
