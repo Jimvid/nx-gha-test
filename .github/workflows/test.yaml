@@ -53,7 +53,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: frontend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/yarn-lock.json') }}
       - run: npx nx format:check --all
         working-directory: frontend
 
@@ -67,7 +67,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: frontend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/yarn-lock.json') }}
       - run: npx nx run react:lint
         working-directory: frontend
   test:
@@ -102,6 +102,15 @@ jobs:
       - run: npx nx run react:test --coverage
         working-directory: frontend
 
+      - name: Organize report by date
+        run: |
+          REPORT_DIR="coverage_reports/$(date +%Y%m%d-%H%M%S)"
+          mkdir -p "$REPORT_DIR"
+          cp -r frontend/apps/react/reports/coverage/* "$REPORT_DIR/"
+
+      - name: Generate index page
+        run: ./scripts/generate_index.sh
+
       - name: Setup Pages
         uses: actions/configure-pages@v2
 
@@ -109,7 +118,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload the coverage directory from the repository
-          path: frontend/apps/react/reports/coverage/
+          path: coverage_reports/
 
       - name: Deploy to GitHub Pages
         id: deployment
