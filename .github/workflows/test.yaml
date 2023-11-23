@@ -84,6 +84,7 @@ jobs:
       - run: npx nx run react:test
         working-directory: frontend
   deploy:
+    name: Deploy coverage report
     needs: setup
     environment:
       name: github-pages
