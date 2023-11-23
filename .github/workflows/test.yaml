@@ -102,7 +102,7 @@ jobs:
       - run: npx nx run react:test --coverage
         working-directory: frontend
 
-      - run: ls cat frontend/apps/react/vite.config.ts
+      - run: cat frontend/apps/react/vite.config.ts
       - run: ls -l frontend/apps/react/html
 
       - name: Check for coverage report existence
