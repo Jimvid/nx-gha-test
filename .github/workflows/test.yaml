@@ -104,12 +104,13 @@ jobs:
 
       - run: cat frontend/apps/react/vite.config.ts
       - run: ls -l frontend/apps/react/html
+      - run: ls -l frontend/apps/react
 
       - name: Organize reports by date
         run: |
           REPORT_DIR="coverage_reports/$(date +%Y%m%d-%H%M%S)"
           mkdir -p "$REPORT_DIR"
-          cp -r apps/react/html/* "$REPORT_DIR/"
+          cp -r frontend/apps/react/html/* "$REPORT_DIR/"
 
       - run: ls -l frontend
 
