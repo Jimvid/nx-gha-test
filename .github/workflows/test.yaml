@@ -112,10 +112,10 @@ jobs:
           mkdir -p "$REPORT_DIR"
           cp -r frontend/apps/react/html/* "$REPORT_DIR/"
 
-      - run: ls -l frontend
+      - run: ls -l coverage_reports
 
       - name: Generate index page
-        run: ./scripts/generate_index.sh
+        run: ./frontend/scripts/generate_index.sh
 
       - name: Setup Pages
         uses: actions/configure-pages@v2

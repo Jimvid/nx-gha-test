@@ -1,6 +1,8 @@
 #!/bin/bash
-cd "$(dirname "$0")/.."
+# Go to the root of the proect
+cd "$(dirname "$0")/../.."
 
+# Generate some html
 echo "<html><head><title>Coverage Reports</title></head><body>" > index.html
 echo "<h1>Coverage Reports</h1><ul>" >> index.html
 
