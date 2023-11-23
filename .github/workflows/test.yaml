@@ -80,9 +80,12 @@ jobs:
         with:
           path: frontend/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
-      - run: npx nx run frontend:test
+      - run: npx nx run react:test
         working-directory: frontend
   deploy:
+    name: Deploy to Github Pages
+    needs: setup
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
