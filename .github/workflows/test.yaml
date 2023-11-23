@@ -105,8 +105,8 @@ jobs:
       - run: ls -l frontend
       - run: ls -l frontend/apps
       - run: ls -l frontend/apps/react
-      - run: ls -l frontend/apps/react/reports
-      - run: ls -l frontend/apps/react/reports/coverage
+      - run: ls -l frontend/apps/react/html
+      - run: ls -l frontend/apps/react/html/coverage
 
       - name: Check for coverage report existence
         run: |
