@@ -114,6 +114,9 @@ jobs:
 
       - run: ls -l coverage_reports
 
+      - name: set permission for script
+        run: chmod +x ./frontend/scripts/generate_index.sh
+
       - name: Generate index page
         run: ./frontend/scripts/generate_index.sh
 
