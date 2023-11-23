@@ -99,7 +99,7 @@ jobs:
         with:
           path: frontend/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
-      - run: npx nx react:test --coverage
+      - run: npx nx run react:test --coverage
         working-directory: frontend
 
       - name: Setup Pages
