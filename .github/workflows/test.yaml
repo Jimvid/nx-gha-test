@@ -102,6 +102,17 @@ jobs:
       - run: npx nx run react:test --coverage
         working-directory: frontend
 
+      - run: ls -l
+      - run: ls -l apps
+      - run: ls -l apps/react
+      - run: ls -l apps/react/reports
+      - run: ls -l apps/react/reports/coverage/
+      - run: ls -l frontend
+      - run: ls -l frontend/apps
+      - run: ls -l frontend/apps/react
+      - run: ls -l frontend/apps/react/reports
+      - run: ls -l frontend/apps/react/reports/coverage
+
       - name: Check for coverage report existence
         run: |
           timeout=30 # 2 minutes in seconds
