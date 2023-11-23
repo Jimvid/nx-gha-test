@@ -109,7 +109,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload the coverage directory from the repository
-          path: "frontend/reports/coverage"
+          path: "reports/coverage"
 
       - name: Deploy to GitHub Pages
         id: deployment
