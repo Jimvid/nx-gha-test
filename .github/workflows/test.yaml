@@ -112,8 +112,7 @@ jobs:
             fi
             echo "Waiting for coverage reports to be generated..."
             sleep 5
-        done      - name: Organize report by date
-
+          done
       - name: Organize reports by date
         run: |
           REPORT_DIR="coverage_reports/$(date +%Y%m%d-%H%M%S)"
