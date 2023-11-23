@@ -104,20 +104,20 @@ jobs:
 
       - name: Check for coverage report existence
         run: |
-          timeout=120 # 2 minutes in seconds
-          while [ ! -d "frontend/apps/react/reports/coverage/" ]; do
+          timeout=30 # 2 minutes in seconds
+          while [ ! -d "apps/react/reports/coverage" ]; do
             if [ $SECONDS -ge $timeout ]; then
               echo "Timeout reached. Coverage reports not found."
               exit 1 # Exit the script with an error
             fi
             echo "Waiting for coverage reports to be generated..."
-            sleep 5
+            sleep 10
           done
       - name: Organize reports by date
         run: |
           REPORT_DIR="coverage_reports/$(date +%Y%m%d-%H%M%S)"
           mkdir -p "$REPORT_DIR"
-          cp -r frontend/apps/react/reports/coverage/* "$REPORT_DIR/"
+          cp -r apps/react/reports/coverage/* "$REPORT_DIR/"
 
       - name: Generate index page
         run: ./scripts/generate_index.sh
