@@ -102,11 +102,8 @@ jobs:
       - run: npx nx run react:test --coverage
         working-directory: frontend
 
-      - run: ls -l frontend
-      - run: ls -l frontend/apps
-      - run: ls -l frontend/apps/react
+      - run: ls cat frontend/apps/react/vite.config.ts
       - run: ls -l frontend/apps/react/html
-      - run: ls -l frontend/apps/react/html/coverage
 
       - name: Check for coverage report existence
         run: |
@@ -123,7 +120,9 @@ jobs:
         run: |
           REPORT_DIR="coverage_reports/$(date +%Y%m%d-%H%M%S)"
           mkdir -p "$REPORT_DIR"
-          cp -r apps/react/reports/coverage/* "$REPORT_DIR/"
+          cp -r apps/react/html/* "$REPORT_DIR/"
+
+      - run: ls -l frontend
 
       - name: Generate index page
         run: ./scripts/generate_index.sh
