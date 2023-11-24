@@ -122,13 +122,18 @@ jobs:
       - name: Git Status
         run: git status
 
+      - name: Git Stash
+        run: git stash
+
       - name: Checkout gh-pages branch
         uses: actions/checkout@v3
         with:
           ref: "gh-pages"
 
       - name: Git Status
-        run: git status
+        run: |
+          git stash apply
+          git status
 
       - name: Push reports to gh-pages branch
         run: |
