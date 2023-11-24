@@ -131,7 +131,7 @@ jobs:
         run: cp -r ${{ github.workspace }}/../temp/coverage_reports/. coverage_reports/
 
       - name: Copy index html
-        run: cp ${{ github.workspace }}/../index.html "."
+        run: cp ${{ github.workspace }}/../temp/index.html "."
 
       - name: Git Status
         run: git status
