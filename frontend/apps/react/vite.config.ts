@@ -29,7 +29,7 @@ const config: ViteConfig = {
   test: {
     coverage: {
       provider: 'istanbul',
-      reporter: ['text', 'html', 'json'],
+      reporter: ['text', 'json-summary'],
       reportsDirectory: './reports/coverage',
     },
     globals: true,

@@ -10,5 +10,3 @@ ls -1 coverage_reports/ | sort -r | head -20 | while read report; do
 done
 
 echo "</ul></body></html>" >> index.html
-
-mv index.html coverage_reports/
