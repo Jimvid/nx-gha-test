@@ -140,8 +140,6 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git stash
-          git pull origin gh-pages
           git add .
           git commit -m "Deploy coverage report dated $(date +%Y%m%d-%H%M%S)"
-          git push https://${{ secrets.PUBLISH_COVERAGE }}@github.com/Jimvid/nx-gha-test HEAD:gh-pages
+          git push -f https://${{ secrets.PUBLISH_COVERAGE }}@github.com/Jimvid/nx-gha-test HEAD:gh-pages
