@@ -104,41 +104,45 @@ jobs:
         run: npx nx run react:test --coverage
         working-directory: frontend
 
-      - name: Organize reports by date and put in temporary folder
-        run: |
-          REPORT_DIR="${{ github.workspace }}/../temp/coverage_reports/$(date +%Y%m%d-%H%M%S)"
-          mkdir -p "$REPORT_DIR"
-          cp -r frontend/apps/react/html/* "$REPORT_DIR/"
+      - name: "Report Coverage"
+        if: always() # Also generate the report if tests are failing
+        uses: davelosert/vitest-coverage-report-action@v2
 
-      - name: Everything in place?
-        run: ls -R ${{ github.workspace }}/../temp
-
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v3
-        with:
-          ref: "gh-pages"
-          token: ${{ secrets.PUBLISH_COVERAGE }}
-          path: "gh-pages-dir"
-
-      - name: Restore reports from the temporary location
-        run: cp -r ${{ github.workspace }}/../temp/coverage_reports/. gh-pages-dir/coverage_reports/
-
-      - name: Git Status
-        run: git status
-
-      - name: Generate Index.html
-        run: |
-          mv ./frontend/scripts/generate_index.sh ./gh-pages-dir/generate_index.sh
-          cd gh-pages-dir
-          chmod +x ./generate_index.sh
-          ./generate_index.sh
-          ls
-
-      - name: Push reports to gh-pages branch
-        run: |
-          cd gh-pages-dir
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add -f coverage_reports/ index.html
-          git commit -m "Deploy new coverage report dated $(date +%Y%m%d-%H%M%S)"
-          git push -f origin HEAD:gh-pages
+      # - name: Organize reports by date and put in temporary folder
+      #   run: |
+      #     REPORT_DIR="${{ github.workspace }}/../temp/coverage_reports/$(date +%Y%m%d-%H%M%S)"
+      #     mkdir -p "$REPORT_DIR"
+      #     cp -r frontend/apps/react/html/* "$REPORT_DIR/"
+      #
+      # - name: Everything in place?
+      #   run: ls -R ${{ github.workspace }}/../temp
+      #
+      # - name: Checkout gh-pages branch
+      #   uses: actions/checkout@v3
+      #   with:
+      #     ref: "gh-pages"
+      #     token: ${{ secrets.PUBLISH_COVERAGE }}
+      #     path: "gh-pages-dir"
+      #
+      # - name: Restore reports from the temporary location
+      #   run: cp -r ${{ github.workspace }}/../temp/coverage_reports/. gh-pages-dir/coverage_reports/
+      #
+      # - name: Git Status
+      #   run: git status
+      #
+      # - name: Generate Index.html
+      #   run: |
+      #     mv ./frontend/scripts/generate_index.sh ./gh-pages-dir/generate_index.sh
+      #     cd gh-pages-dir
+      #     chmod +x ./generate_index.sh
+      #     ./generate_index.sh
+      #     ls
+      #
+      # - name: Push reports to gh-pages branch
+      #   run: |
+      #     cd gh-pages-dir
+      #     git config user.name "GitHub Actions"
+      #     git config user.email "actions@github.com"
+      #     git add -f coverage_reports/ index.html
+      #     git commit -m "Deploy new coverage report dated $(date +%Y%m%d-%H%M%S)"
+      #     git push -f origin HEAD:gh-pages
