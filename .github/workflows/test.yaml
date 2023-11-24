@@ -91,7 +91,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout current branch
         uses: actions/checkout@v3
 
       - name: Cache node_modules
@@ -100,7 +100,8 @@ jobs:
           path: frontend/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
 
-      - run: npx nx run react:test --coverage
+      - name: Run tests and generate coverage report
+        run: npx nx run react:test --coverage
         working-directory: frontend
 
       - name: Organize reports by date
@@ -115,11 +116,6 @@ jobs:
       - name: Generate index page
         run: ./frontend/scripts/generate_index.sh
 
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v3
-        with:
-          ref: "gh-pages"
-
       - name: List generated reports
         run: ls -R coverage_reports/
 
@@ -131,10 +127,21 @@ jobs:
             echo "Secret is set."
           fi
 
+      - name: Git Status
+        run: git status
+
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v3
+        with:
+          ref: "gh-pages"
+          path: "gh-pages"
+
       - name: Push reports to gh-pages branch
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
+          git checkout --orphan gh-pages-temp
+          git reset --hard
           git add -f coverage_reports/ index.html
           git commit -m "Deploy coverage report dated $(date +%Y%m%d-%H%M%S)"
-          git push https://${{ secrets.GH_PAGES }}@github.com/Jimvid/nx-gha-test HEAD:gh-pages
+          git push https://${{ secrets.GH_PAGES }}@github.com/Jimvid/nx-gha-test gh-pages-temp:gh-pages --force
