@@ -126,8 +126,7 @@ jobs:
           git reset --hard
           git add -f coverage_reports/ index.html
           git commit -m "Deploy coverage report dated $(date +%Y%m%d-%H%M%S)"
-          git push origin gh-pages-temp:gh-pages --force
+          # Use token in the repository URL for authentication
+          git push https://${{ secrets.DELOGUE_GH_TOKEN }}@github.com/Jimvid/nx-gha-test gh-pages-temp:gh-pages --force
           git checkout develop
           git branch -D gh-pages-temp
-        env:
-          GITHUB_TOKEN: ${{ secrets.DELOGUE_GH_TOKEN}}
