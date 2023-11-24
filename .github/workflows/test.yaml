@@ -116,16 +116,24 @@ jobs:
       - name: Generate index page
         run: ./frontend/scripts/generate_index.sh
 
-      - name: List generated reports
-        run: ls -R coverage_reports/
-
       - name: Git Status
         run: git status
+
+      - name: Move reports to a temporary location
+        run: |
+          mkdir -p ${{ github.workspace }}/../temp_coverage_reports
+          mv coverage_reports/ ${{ github.workspace }}/../temp_coverage_reports/coverage_reports
+          mv index.html ${{ github.workspace }}/../temp_coverage_reports/index.html
 
       - name: Checkout gh-pages branch
         uses: actions/checkout@v3
         with:
           ref: "gh-pages"
+
+      - name: Restore reports from the temporary location
+        run: |
+          mv ${{ github.workspace }}/../temp_coverage_reports/coverage_reports .
+          mv ${{ github.workspace }}/../temp_coverage_reports/index.html .
 
       - name: Git Status
         run: git status
@@ -134,6 +142,6 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add f coverage_reports/ index.html
+          git add -f coverage_reports/ index.html
           git commit -m "Deploy coverage report dated $(date +%Y%m%d-%H%M%S)"
           git push -f https://${{ secrets.PUBLISH_COVERAGE }}@github.com/Jimvid/nx-gha-test HEAD:gh-pages
