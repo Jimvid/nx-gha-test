@@ -112,13 +112,14 @@ jobs:
           mkdir -p "$REPORT_DIR"
           cp -r frontend/apps/react/html/* "$REPORT_DIR/"
 
-      - run: ls -l coverage_reports
-
       - name: set permission for script
         run: chmod +x ./frontend/scripts/generate_index.sh
 
       - name: Generate index page
         run: ./frontend/scripts/generate_index.sh
+
+      - name: List generated reports
+        run: ls -R coverage_reports/
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
