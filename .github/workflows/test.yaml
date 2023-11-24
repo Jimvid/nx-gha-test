@@ -99,12 +99,9 @@ jobs:
         with:
           path: frontend/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+
       - run: npx nx run react:test --coverage
         working-directory: frontend
-
-      - run: cat frontend/apps/react/vite.config.ts
-      - run: ls -l frontend/apps/react/html
-      - run: ls -l frontend/apps/react
 
       - name: Organize reports by date
         run: |
@@ -112,7 +109,7 @@ jobs:
           mkdir -p "$REPORT_DIR"
           cp -r frontend/apps/react/html/* "$REPORT_DIR/"
 
-      - name: set permission for script
+      - name: Set permission for script
         run: chmod +x ./frontend/scripts/generate_index.sh
 
       - name: Generate index page
@@ -121,15 +118,14 @@ jobs:
       - name: List generated reports
         run: ls -R coverage_reports/
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # Upload the coverage directory from the repository
-          path: coverage_reports/
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+      - name: Push reports to gh-pages
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git checkout --orphan gh-pages-temp
+          git reset --hard
+          git add -f coverage_reports/ index.html
+          git commit -m "Deploy coverage report dated $(date +%Y%m%d-%H%M%S)"
+          git push origin gh-pages-temp:gh-pages --force
+          git checkout develop
+          git branch -D gh-pages-temp
