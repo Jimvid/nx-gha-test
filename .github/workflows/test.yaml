@@ -121,7 +121,9 @@ jobs:
 
       - name: Move reports to a temporary location
         run: mkdir -p ${{ github.workspace }}/../temp_coverage_reports
+      - name: Move reports to a temporary location
         run: mv coverage_reports/ ${{ github.workspace }}/../temp_coverage_reports/coverage_reports
+      - name: Move reports to a temporary location
         run: mv index.html ${{ github.workspace }}/../temp_coverage_reports/index.html
 
       - name: Checkout gh-pages branch
