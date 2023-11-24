@@ -129,3 +129,5 @@ jobs:
           git push origin gh-pages-temp:gh-pages --force
           git checkout develop
           git branch -D gh-pages-temp
+        env:
+          GITHUB_TOKEN: ${{ secrets.DELOGUE_GH_TOKEN}}
