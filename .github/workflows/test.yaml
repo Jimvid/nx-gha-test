@@ -130,6 +130,12 @@ jobs:
         with:
           ref: "gh-pages"
 
+      - name: Git Status
+        run: git status
+
+      - name: What do we have?
+        run: ls
+
       - name: Restore reports from the temporary location
         run: |
           mv ${{ github.workspace }}/../temp_coverage_reports/coverage_reports "."
