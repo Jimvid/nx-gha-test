@@ -128,7 +128,7 @@ jobs:
 
       - name: Generate Index.html
         run: |
-          mv frontend/scripts/generate_index.sh gh-pages/generate_index.sh
+          mv ./frontend/scripts/generate_index.sh ./gh-pages/generate_index.sh
           cd gh-pages
           chmod +x ./generate_index.sh
           ./generate_index.sh
