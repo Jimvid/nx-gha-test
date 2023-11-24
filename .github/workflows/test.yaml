@@ -105,7 +105,7 @@ jobs:
         run: npx nx run react:test --coverage
         working-directory: frontend
 
-      - name: Run tests and generate coverage report
+      - name: what do we have
         run: |
           cd frontend/apps && ls -R
 
@@ -114,6 +114,7 @@ jobs:
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           json-summary-path: frontend/apps/react/reports/coverage/coverage-summary.json
+          vite-config-path: frontend/apps/react
 
       # - name: Organize reports by date and put in temporary folder
       #   run: |
