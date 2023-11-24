@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-// @ts-ignore
-import { registerSW } from 'virtual:pwa-register';
+// import { registerSW } from 'virtual:pwa-register';
 
 /* eslint-disable-next-line */
 export interface HomeProps {}
@@ -10,25 +9,25 @@ const StyledHome = styled.div`
 `;
 
 // add this to prompt for a refresh
-const updateSW = registerSW({
-  onNeedRefresh() {
-    if (window.confirm('New content available. Reload?')) {
-      updateSW(true);
-    }
-  },
-});
+// const updateSW = registerSW({
+//   onNeedRefresh() {
+//     if (window.confirm('New content available. Reload?')) {
+//       updateSW(true);
+//     }
+//   },
+// });
 
-export function Home(props: HomeProps) {
+export function Home() {
   return (
     <StyledHome>
       <h1>Welcome to Home!</h1>
-      <button
+      {/* <button
         onClick={() => {
           updateSW();
         }}
       >
         Update Service Worker
-      </button>
+      </button> */}
       New content here
     </StyledHome>
   );
