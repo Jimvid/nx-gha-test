@@ -120,7 +120,6 @@ jobs:
         run: git status
 
       - name: Move reports to a temporary location
-      - name: Restore reports from the temporary location
         run: |
           mv ${{ github.workspace }}/../temp_coverage_reports/coverage_reports "."
           mv ${{ github.workspace }}/../temp_coverage_reports/index.html "."
