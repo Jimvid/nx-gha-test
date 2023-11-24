@@ -127,6 +127,8 @@ jobs:
           git add -f coverage_reports/ index.html
           git commit -m "Deploy coverage report dated $(date +%Y%m%d-%H%M%S)"
           # Use token in the repository URL for authentication
-          git push https://${{ secrets.DELOGUE_GH_TOKEN }}@github.com/Jimvid/nx-gha-test gh-pages-temp:gh-pages --force
+          git push https://x-access-token:${{ secrets.DELOGUE_GH_TOKEN }}@github.com/Jimvid/nx-gha-test gh-pages-temp:gh-pages --force
           git checkout develop
           git branch -D gh-pages-temp
+        env:
+          GITHUB_TOKEN: ${{ secrets.DELOGUE_GH_TOKEN }}
