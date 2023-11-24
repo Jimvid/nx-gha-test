@@ -118,7 +118,7 @@ jobs:
       - name: List generated reports
         run: ls -R coverage_reports/
 
-      - name: Push reports to gh-pages
+      - name: Push reports to gh-pages branch
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
