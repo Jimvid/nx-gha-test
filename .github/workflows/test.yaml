@@ -104,9 +104,9 @@ jobs:
         run: npx nx run react:test --coverage
         working-directory: frontend
 
-      - name: Organize reports by date
+      - name: Organize reports by date and put in temporary folder
         run: |
-          REPORT_DIR="coverage_reports/$(date +%Y%m%d-%H%M%S)"
+          REPORT_DIR="${{ github.workspace }}/../temp/coverage_reports/$(date +%Y%m%d-%H%M%S)"
           mkdir -p "$REPORT_DIR"
           cp -r frontend/apps/react/html/* "$REPORT_DIR/"
 
@@ -116,28 +116,22 @@ jobs:
       - name: Generate index page
         run: ./frontend/scripts/generate_index.sh
 
-      - name: Git Status
-        run: git status
+      - name: Move index.html
+        run: mv index.html ${{ github.workspace }}/../temp/index.html
 
-      - name: Move reports to a temporary location
-        run: mkdir -p ${{ github.workspace }}/../temp_coverage_reports
-      - name: Move reports to a temporary location
-        run: mv coverage_reports/ ${{ github.workspace }}/../temp_coverage_reports/coverage_reports
-      - name: Move reports to a temporary location
-        run: mv index.html ${{ github.workspace }}/../temp_coverage_reports/index.html
+      - name: Everything in place?
+        run: ls -R ${{ github.workspace }}/../temp
 
       - name: Checkout gh-pages branch
         uses: actions/checkout@v3
         with:
           ref: "gh-pages"
 
-      - name: Git Status
-        run: git status
-
       - name: Restore reports from the temporary location
-        run: |
-          mv ${{ github.workspace }}/../temp_coverage_reports/coverage_reports "."
-          mv ${{ github.workspace }}/../temp_coverage_reports/index.html "."
+        run: cp -r ${{ github.workspace }}/../temp/coverage_reports/. coverage_reports/
+
+      - name: Copy index html
+        run: cp ${{ github.workspace }}/../coverage_reports/index.html "."
 
       - name: Git Status
         run: git status
