@@ -116,8 +116,11 @@ jobs:
       - name: Generate index page
         run: ./frontend/scripts/generate_index.sh
 
+      - name: Create temp folder
+        run: mkdir ${{ github.workspace }}/../temp
+
       - name: Move reports
-        run: mv coverage_reports ${{ github.workspace }}/../temp/.
+        run: mv coverage_reports ${{ github.workspace }}/../temp/coverage_reports
 
       - name: Move index.html
         run: mv index.html ${{ github.workspace }}/../temp/index.html
