@@ -136,5 +136,5 @@ jobs:
           git commit -m "Deploy coverage report dated $(date +%Y%m%d-%H%M%S)"
           # Correctly use the PAT in the git push command
           git -c http.extraHeader="AUTHORIZATION: basic x-access-token:${{ secrets.GH_PAGES}}" push https://github.com/Jimvid/nx-gha-test gh-pages-temp:gh-pages --force
-          env
-            GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
