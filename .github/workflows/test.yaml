@@ -120,10 +120,10 @@ jobs:
         run: git status
 
       - name: Move reports to a temporary location
+      - name: Restore reports from the temporary location
         run: |
-          mkdir -p ${{ github.workspace }}/../temp_coverage_reports
-          mv coverage_reports/ ${{ github.workspace }}/../temp_coverage_reports/coverage_reports
-          mv index.html ${{ github.workspace }}/../temp_coverage_reports/index.html
+          mv ${{ github.workspace }}/../temp_coverage_reports/coverage_reports "."
+          mv ${{ github.workspace }}/../temp_coverage_reports/index.html "."
 
       - name: Checkout gh-pages branch
         uses: actions/checkout@v3
@@ -132,8 +132,8 @@ jobs:
 
       - name: Restore reports from the temporary location
         run: |
-          mv ${{ github.workspace }}/../temp_coverage_reports/coverage_reports .
-          mv ${{ github.workspace }}/../temp_coverage_reports/index.html .
+          mv ${{ github.workspace }}/../temp_coverage_reports/coverage_reports "."
+          mv ${{ github.workspace }}/../temp_coverage_reports/index.html "."
 
       - name: Git Status
         run: git status
