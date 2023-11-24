@@ -106,24 +106,9 @@ jobs:
 
       - name: Organize reports by date and put in temporary folder
         run: |
-          REPORT_DIR="coverage_reports/$(date +%Y%m%d-%H%M%S)"
+          REPORT_DIR="${{ github.workspace }}/../temp/coverage_reports/$(date +%Y%m%d-%H%M%S)"
           mkdir -p "$REPORT_DIR"
           cp -r frontend/apps/react/html/* "$REPORT_DIR/"
-
-      - name: Set permission for script
-        run: chmod +x ./frontend/scripts/generate_index.sh
-
-      - name: Generate index page
-        run: ./frontend/scripts/generate_index.sh
-
-      - name: Create temp folder
-        run: mkdir ${{ github.workspace }}/../temp
-
-      - name: Move reports
-        run: mv coverage_reports ${{ github.workspace }}/../temp/coverage_reports
-
-      - name: Move index.html
-        run: mv index.html ${{ github.workspace }}/../temp/index.html
 
       - name: Everything in place?
         run: ls -R ${{ github.workspace }}/../temp
@@ -143,6 +128,14 @@ jobs:
 
       - name: Git Status
         run: git status
+
+      - name: Generate Index.html
+        run: |
+          mv frontend/scripts/generate_index.sh gh-pages/generate_index.sh
+          cd gh-pages
+          chmod +x ./generate_index.sh
+          ./generate_index.sh
+          ls
 
       - name: Push reports to gh-pages branch
         run: |
