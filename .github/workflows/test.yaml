@@ -108,7 +108,8 @@ jobs:
       - name: "Report Coverage"
         if: always() # Also generate the report if tests are failing
         uses: davelosert/vitest-coverage-report-action@v2
-        working-directory: frontend
+        with:
+          json-summary-path: frontend/apps/react/reports/coverage/coverage-summary.json
 
       # - name: Organize reports by date and put in temporary folder
       #   run: |
