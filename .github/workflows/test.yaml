@@ -115,6 +115,11 @@ jobs:
       - name: Generate index page
         run: ./frontend/scripts/generate_index.sh
 
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v3
+        with:
+          ref: "gh-pages"
+
       - name: List generated reports
         run: ls -R coverage_reports/
 
@@ -130,11 +135,6 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git checkout --orphan gh-pages-temp
-          git reset --hard
           git add -f coverage_reports/ index.html
           git commit -m "Deploy coverage report dated $(date +%Y%m%d-%H%M%S)"
-          # Correctly use the PAT in the git push command
-          git -c http.extraHeader="AUTHORIZATION: basic x-access-token:${{ secrets.GH_PAGES}}" push https://github.com/Jimvid/nx-gha-test gh-pages-temp:gh-pages --force
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAGES }}
+          git push https://${{ secrets.GH_PAGES }}@github.com/Jimvid/nx-gha-test HEAD:gh-pages
