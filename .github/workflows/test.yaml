@@ -127,11 +127,6 @@ jobs:
         with:
           ref: "gh-pages"
 
-      - name: Copy reports to gh-pages branch directory
-        run: |
-          cp -r $GITHUB_WORKSPACE/coverage_reports/ "gh-pages-dir/"
-          cp $GITHUB_WORKSPACE/index.html "gh-pages-dir/"
-
       - name: Git Status
         run: git status
 
