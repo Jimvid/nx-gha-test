@@ -123,9 +123,6 @@ jobs:
       - name: Restore reports from the temporary location
         run: cp -r ${{ github.workspace }}/../temp/coverage_reports/. gh-pages-dir/coverage_reports/
 
-      - name: Copy index html
-        run: cp ${{ github.workspace }}/../temp/index.html gh-pages-dir/
-
       - name: Git Status
         run: git status
 
