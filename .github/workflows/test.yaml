@@ -141,6 +141,8 @@ jobs:
       - name: Push reports to gh-pages branch
         run: |
           cd gh-pages-dir
-          git add -A
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add -f coverage_reports/ index.html
           git commit -m "Deploy new coverage report dated $(date +%Y%m%d-%H%M%S)"
           git push -f origin HEAD:gh-pages
