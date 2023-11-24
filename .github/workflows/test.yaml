@@ -126,20 +126,21 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: "gh-pages"
+          token: ${{ secrets.PUBLISH_COVERAGE }}
+          path: "gh-pages-dir"
 
       - name: Restore reports from the temporary location
-        run: cp -r ${{ github.workspace }}/../temp/coverage_reports/. coverage_reports/
+        run: cp -r ${{ github.workspace }}/../temp/coverage_reports/. gh-pages-dir/coverage_reports/
 
       - name: Copy index html
-        run: cp ${{ github.workspace }}/../temp/index.html "."
+        run: cp ${{ github.workspace }}/../temp/index.html gh-pages-dir/
 
       - name: Git Status
         run: git status
 
       - name: Push reports to gh-pages branch
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add -f coverage_reports/ index.html
-          git commit -m "Deploy coverage report dated $(date +%Y%m%d-%H%M%S)"
-          git push -f https://${{ secrets.PUBLISH_COVERAGE }}@github.com/Jimvid/nx-gha-test HEAD:gh-pages
+          cd gh-pages-dir
+          git add -A
+          git commit -m "Deploy new coverage report dated $(date +%Y%m%d-%H%M%S)"
+          git push -f origin HEAD:gh-pages
