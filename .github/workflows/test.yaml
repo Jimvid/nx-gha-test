@@ -126,6 +126,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: "gh-pages"
+          path: "coverage_reports"
 
       - name: Git Status
         run: git status
