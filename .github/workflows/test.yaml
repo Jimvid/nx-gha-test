@@ -105,6 +105,10 @@ jobs:
         run: npx nx run react:test --coverage
         working-directory: frontend
 
+      - name: Run tests and generate coverage report
+        run: |
+          cd frontend/apps && ls -R
+
       - name: "Report Coverage"
         if: always() # Also generate the report if tests are failing
         uses: davelosert/vitest-coverage-report-action@v2
